@@ -6,10 +6,8 @@ const getAllLinks = async (req, res) => {
   try {
     const links = await knex("links").select("*");
     const groupedLinks = GroupedLinks(links);
-    console.log("Grouped links:", groupedLinks);
     res.status(200).json(groupedLinks);
   } catch (error) {
-    console.error("Error fetching links:", error);
     res.status(500).json({ message: `Unable to retrieve links grouped by group_name: ${error}` });
   }
 };

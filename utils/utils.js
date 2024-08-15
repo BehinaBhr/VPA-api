@@ -16,16 +16,19 @@ const GroupedLinks = (links) => {
   const groupedLinks = {};
 
   links.forEach((link) => {
-    const { group_name } = link;
+    const { group_name, href, title } = link;
     // Create a new group if it doesn't exist
     if (!groupedLinks[group_name]) {
       groupedLinks[group_name] = [];
     }
     // Add the link to the corresponding group
-    groupedLinks[group_name].push(link);
+    groupedLinks[group_name].push({ href, title });
   });
-
-  return groupedLinks;
+  // Transform the groupedLinks object into an array of objects
+  return Object.keys(groupedLinks).map((groupName) => ({
+    name: groupName,
+    links: groupedLinks[groupName],
+  }));
 };
 
 module.exports = {
