@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const sampleRoutes = require("./routes/sample-routes");
+const linksRoutes = require("./routes/links-routes");
 require("dotenv").config();
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors({ origin: CORS_ORIGIN }));
 app.use(express.json());
 
 app.use("/api/sample", sampleRoutes);
+app.use("/api/links", linksRoutes);
 // Define a start routes
 app.get("/", (req, res) => {
   res.send("Welcome to VPA API");

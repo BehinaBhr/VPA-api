@@ -11,7 +11,25 @@ const FormatSrc = (src) => {
   return match ? match[1] : null;
 };
 
+// helper function to group the links by `group_name`.
+const GroupedLinks = (links) => {
+  const groupedLinks = {};
+
+  links.forEach((link) => {
+    const { group_name } = link;
+    // Create a new group if it doesn't exist
+    if (!groupedLinks[group_name]) {
+      groupedLinks[group_name] = [];
+    }
+    // Add the link to the corresponding group
+    groupedLinks[group_name].push(link);
+  });
+
+  return groupedLinks;
+};
+
 module.exports = {
   FormatImg,
   FormatSrc,
+  GroupedLinks,
 };
