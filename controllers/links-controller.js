@@ -1,5 +1,6 @@
 const knex = require("knex")(require("../knexfile"));
 const { GroupedLinks } = require("../utils/utils");
+const { validateLinksFields } = require("../validators/links-validators");
 
 // Get all links grouped by group_name
 const getAllLinks = async (req, res) => {
@@ -29,6 +30,11 @@ const getLinkById = async (req, res) => {
 
 // Create a new link
 const createLink = async (req, res) => {
+  const validationResponse = await validateLinksFields(req);
+  if (validationResponse) {
+    return res.status(validationResponse.status).json({ message: validationResponse.message });
+  }
+
   const { group_name, href, title } = req.body;
   try {
     const [id] = await knex("links").insert({ group_name, href, title });
@@ -43,6 +49,12 @@ const createLink = async (req, res) => {
 const updateLink = async (req, res) => {
   const { id } = req.params;
   const { group_name, href, title } = req.body;
+
+  const validationResponse = await validateLinksFields(req, true);
+  if (validationResponse) {
+    return res.status(validationResponse.status).json({ message: validationResponse.message });
+  }
+
   try {
     const updated = await knex("links").where({ id }).update({ group_name, href, title });
     if (updated) {

@@ -1,5 +1,6 @@
 const knex = require("knex")(require("../knexfile"));
 const { FormatSrc } = require("../utils/utils");
+const { validateAlbumsFields } = require("../validators/albums-validators");
 
 // Get all albums
 const getAllAlbums = async (req, res) => {
@@ -28,6 +29,11 @@ const getAlbumById = async (req, res) => {
 
 // Create a new album
 const createAlbum = async (req, res) => {
+  const validationResponse = await validateAlbumsFields(req);
+  if (validationResponse) {
+    return res.status(validationResponse.status).json({ message: validationResponse.message });
+  }
+
   const { name, date, src } = req.body;
   const formattedSrc = FormatSrc(src);
 
@@ -48,8 +54,14 @@ const createAlbum = async (req, res) => {
 const updateAlbum = async (req, res) => {
   const { id } = req.params;
   const { name, date, src } = req.body;
-  const formattedSrc = FormatSrc(src);
 
+  const validationResponse = await validateAlbumsFields(req, true);
+  if (validationResponse) {
+    return res.status(validationResponse.status).json({ message: validationResponse.message });
+  }
+
+  const formattedSrc = FormatSrc(src);
+  
   try {
     const updatedRows = await knex("albums").where({ id }).update({ name, date, src: formattedSrc });
 
