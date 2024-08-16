@@ -11,6 +11,16 @@ const FormatSrc = (src) => {
   return match ? match[1] : null;
 };
 
+// helper function to sort albums by `date`.
+const SortedAlbums = (albums) => {
+  return albums.sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    // in descending order
+    return dateB - dateA;
+  });
+};
+
 // helper function to group the links by `group_name`.
 const GroupedLinks = (links) => {
   const groupedLinks = {};
@@ -34,5 +44,6 @@ const GroupedLinks = (links) => {
 module.exports = {
   FormatImg,
   FormatSrc,
+  SortedAlbums,
   GroupedLinks,
 };

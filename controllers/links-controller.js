@@ -45,7 +45,7 @@ const createLink = async (req, res) => {
   }
 };
 
-/// Update an existing link
+// Update an existing link
 const updateLink = async (req, res) => {
   const { id } = req.params;
   const { group_name, href, title } = req.body;

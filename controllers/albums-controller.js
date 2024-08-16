@@ -1,12 +1,13 @@
 const knex = require("knex")(require("../knexfile"));
-const { FormatSrc } = require("../utils/utils");
+const { FormatSrc, SortedAlbums } = require("../utils/utils");
 const { validateAlbumsFields } = require("../validators/albums-validators");
 
-// Get all albums
+// Get all albums sorted by `date`
 const getAllAlbums = async (req, res) => {
   try {
     const albums = await knex("albums").select("*");
-    res.status(200).json(albums);
+    const sortedAlbums = SortedAlbums(albums);
+    res.status(200).json(sortedAlbums);
   } catch (error) {
     res.status(500).json({ message: "Unable to retrieve albums", error });
   }
@@ -61,7 +62,7 @@ const updateAlbum = async (req, res) => {
   }
 
   const formattedSrc = FormatSrc(src);
-  
+
   try {
     const updatedRows = await knex("albums").where({ id }).update({ name, date, src: formattedSrc });
 
