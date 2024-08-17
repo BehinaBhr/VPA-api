@@ -7,18 +7,9 @@ const FormatImg = (image) => {
 
 // helper function to extract the folder ID from the sharable Google Drive link.
 const FormatSrc = (src) => {
-  const match = src.match(/\/folders\/([^?]+)/);
-  return match ? match[1] : null;
-};
-
-// helper function to sort albums by `date`.
-const SortedAlbums = (albums) => {
-  return albums.sort((a, b) => {
-    const dateA = new Date(a.date);
-    const dateB = new Date(b.date);
-    // in descending order
-    return dateB - dateA;
-  });
+  const regex = /\/folders\/([^?]+)/;
+  const matches = src.match(regex);
+  return matches ? matches[1] : null;
 };
 
 // helper function to group the links by `group_name`.
@@ -44,6 +35,5 @@ const GroupedLinks = (links) => {
 module.exports = {
   FormatImg,
   FormatSrc,
-  SortedAlbums,
   GroupedLinks,
 };

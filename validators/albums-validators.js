@@ -2,7 +2,7 @@ const knex = require("knex")(require("../knexfile"));
 const { FormatSrc } = require("../utils/utils");
 
 const validateAlbumsFields = async (req, update = false) => {
-  // Required fields for goal creation or update
+  // Required fields for album creation or update
   const requiredFields = ["name", "date", "src"];
 
   // Check if required fields are provided and not null or empty

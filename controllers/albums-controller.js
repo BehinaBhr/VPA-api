@@ -1,13 +1,12 @@
 const knex = require("knex")(require("../knexfile"));
-const { FormatSrc, SortedAlbums } = require("../utils/utils");
+const { FormatSrc } = require("../utils/utils");
 const { validateAlbumsFields } = require("../validators/albums-validators");
 
 // Get all albums sorted by `date`
 const getAllAlbums = async (req, res) => {
   try {
-    const albums = await knex("albums").select("*");
-    const sortedAlbums = SortedAlbums(albums);
-    res.status(200).json(sortedAlbums);
+    const albums = await knex("albums").select("*").orderBy("date", "desc");
+    res.status(200).json(albums);
   } catch (error) {
     res.status(500).json({ message: "Unable to retrieve albums", error });
   }
@@ -35,15 +34,14 @@ const createAlbum = async (req, res) => {
     return res.status(validationResponse.status).json({ message: validationResponse.message });
   }
 
-  const { name, date, src } = req.body;
-  const formattedSrc = FormatSrc(src);
+  const newAlbumData = {
+    ...req.body,
+    src: FormatSrc(req.body.src), // Format the src URL
+  };
 
   try {
-    const [newAlbumId] = await knex("albums").insert({
-      name,
-      date,
-      src: formattedSrc,
-    });
+    // to get a response with the full details of created album
+    const [newAlbumId] = await knex("albums").insert({ newAlbumData });
     const newAlbum = await knex("albums").where({ id: newAlbumId }).first();
     res.status(201).json(newAlbum);
   } catch (error) {
@@ -54,19 +52,22 @@ const createAlbum = async (req, res) => {
 // Update an existing album
 const updateAlbum = async (req, res) => {
   const { id } = req.params;
-  const { name, date, src } = req.body;
 
   const validationResponse = await validateAlbumsFields(req, true);
   if (validationResponse) {
     return res.status(validationResponse.status).json({ message: validationResponse.message });
   }
 
-  const formattedSrc = FormatSrc(src);
+  const updates = {
+    ...req.body,
+    src: FormatSrc(req.body.src), // Format the src URL
+  };
 
+  // to get a response with the full details of updated album
   try {
-    const updatedRows = await knex("albums").where({ id }).update({ name, date, src: formattedSrc });
+    const updatedRow = await knex("albums").where({ id }).update(updates);
 
-    if (updatedRows) {
+    if (updatedRow) {
       const updatedAlbum = await knex("albums").where({ id }).first();
       res.status(200).json(updatedAlbum);
     } else {
