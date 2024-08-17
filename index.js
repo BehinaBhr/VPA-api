@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const linksRoutes = require("./routes/links-routes");
 const albumsRoutes = require("./routes/albums-routes");
+const eventsRoutes = require("./routes/events-routes");
 require("dotenv").config();
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use("/api/links", linksRoutes);
 app.use("/api/albums", albumsRoutes);
+app.use("/api/events", eventsRoutes);
 // Define a start routes
 app.get("/", (req, res) => {
   res.send("Welcome to VPA API");
