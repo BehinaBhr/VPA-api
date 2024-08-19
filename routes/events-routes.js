@@ -7,8 +7,8 @@ router.route("/").get(eventsController.getAllEvents);
 // Get past events
 router.get("/past", eventsController.getPastEvents);
 
-// Get ongoing events
-router.get("/ongoing", eventsController.getOngoingEvents);
+// Get upcoming events
+router.get("/upcoming", eventsController.getUpcomingEvents);
 
 // Get a single event by ID
 router.route("/:id").get(eventsController.getEventById);

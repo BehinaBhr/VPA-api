@@ -37,13 +37,13 @@ const getPastEvents = async (req, res) => {
   }
 };
 
-// Get ongoing events
-const getOngoingEvents = async (req, res) => {
+// Get upcoming events
+const getUpcomingEvents = async (req, res) => {
   try {
-    const ongoingEvents = await knex("events").whereRaw("date >= CURDATE()").orderBy("date", "desc").select(eventAttr);
-    res.status(200).json(ongoingEvents);
+    const upcomingEvents = await knex("events").whereRaw("date >= CURDATE()").orderBy("date", "desc").select(eventAttr);
+    res.status(200).json(upcomingEvents);
   } catch (error) {
-    res.status(500).json({ message: `Unable to retrieve ongoing events: ${error}` });
+    res.status(500).json({ message: `Unable to retrieve upcoming events: ${error}` });
   }
 };
 
@@ -131,7 +131,7 @@ const deleteEvent = async (req, res) => {
 module.exports = {
   getAllEvents,
   getPastEvents,
-  getOngoingEvents,
+  getUpcomingEvents,
   getEventById,
   createEvent,
   updateEvent,
