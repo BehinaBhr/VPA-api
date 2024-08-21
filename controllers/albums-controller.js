@@ -41,11 +41,11 @@ const createAlbum = async (req, res) => {
 
   try {
     // to get a response with the full details of created album
-    const [newAlbumId] = await knex("albums").insert({ newAlbumData });
+    const [newAlbumId] = await knex("albums").insert(newAlbumData);
     const newAlbum = await knex("albums").where({ id: newAlbumId }).first();
     res.status(201).json(newAlbum);
   } catch (error) {
-    res.status(500).json({ message: `Unable to create a new album": ${error}` });
+    res.status(500).json({ message: `Unable to create a new album: ${error}` });
   }
 };
 
