@@ -2,6 +2,7 @@ const knex = require("knex")(require("../knexfile"));
 const { FormatSrc } = require("../utils/utils");
 
 const validateAlbumsFields = async (req, update = false) => {
+
   // Required fields for album creation or update
   const requiredFields = ["name", "date", "src"];
 
@@ -20,9 +21,8 @@ const validateAlbumsFields = async (req, update = false) => {
 
   // Check if the same album already exists
   const existingAlbum = await knex("albums").where({
-    name: req.body.name,
-    date: req.body.date,
-    src: req.body.src,
+    ...req.body,
+    src: FormatSrc(req.body.src)
   });
 
   // If updating, allow the same album if it's the only one or doesn't exist

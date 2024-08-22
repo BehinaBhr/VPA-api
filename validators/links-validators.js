@@ -12,7 +12,7 @@ const validateLinkFields = async (req, update = false) => {
   }
 
   // Check if the same link already exists
-  const existingAlbum = await knex("links").where({
+  const existingLink = await knex("links").where({
     group_name: req.body.group_name,
     href: req.body.href,
     title: req.body.title,
