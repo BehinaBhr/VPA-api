@@ -1,4 +1,5 @@
 const knex = require("knex")(require("../knexfile"));
+const { ValidateHref } = require("../utils/utils");
 
 const validateLinkFields = async (req, update = false) => {
   // Required fields for link creation or update
@@ -9,6 +10,11 @@ const validateLinkFields = async (req, update = false) => {
     if (!req.body[field]) {
       return { status: 400, message: `Invalid input: ${field} are required` };
     }
+  }
+
+  // Validate the 'href' field
+  if (!ValidateHref(req.body.href)) {
+    return { status: 400, message: "Invalid input: href must be a valid URL" };
   }
 
   // Check if the same link already exists
