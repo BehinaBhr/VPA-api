@@ -1,9 +1,6 @@
 const router = require("express").Router();
 const linksController = require("../controllers/links-controller");
 
-// Get all links grouped by group_name
-router.route("/").get(linksController.getAllLinks);
-
 // Get a single link by ID
 router.route("/:id").get(linksController.getLinkById);
 

@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const groupsRoutes = require("./routes/groups-routes");
 const linksRoutes = require("./routes/links-routes");
 const albumsRoutes = require("./routes/albums-routes");
 const eventsRoutes = require("./routes/events-routes");
@@ -13,6 +14,7 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:3000";
 app.use(cors({ origin: CORS_ORIGIN }));
 app.use(express.json());
 
+app.use("/api/groups", groupsRoutes);
 app.use("/api/links", linksRoutes);
 app.use("/api/albums", albumsRoutes);
 app.use("/api/events", eventsRoutes);

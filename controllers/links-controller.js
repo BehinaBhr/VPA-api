@@ -1,17 +1,5 @@
 const knex = require("knex")(require("../knexfile"));
-const { GroupedLinks } = require("../utils/utils");
 const { validateLinksFields } = require("../validators/links-validators");
-
-// Get all links grouped by group_name
-const getAllLinks = async (req, res) => {
-  try {
-    const links = await knex("links").select("*");
-    const groupedLinks = GroupedLinks(links);
-    res.status(200).json(groupedLinks);
-  } catch (error) {
-    res.status(500).json({ message: `Unable to retrieve links grouped by group_name: ${error}` });
-  }
-};
 
 // Get a single link by ID
 const getLinkById = async (req, res) => {
@@ -35,10 +23,9 @@ const createLink = async (req, res) => {
     return res.status(validationResponse.status).json({ message: validationResponse.message });
   }
 
-  const { group_name, href, title } = req.body;
   try {
-    const [id] = await knex("links").insert({ group_name, href, title });
-    const newLink = await knex("links").where({ id }).first();
+    const [newLinkId] = await knex("links").insert(req.body);
+    const newLink = await knex("links").where({ id: newLinkId }).first();
     res.status(201).json(newLink);
   } catch (error) {
     res.status(500).json({ message: `Unable to create a new link: ${error}` });
@@ -48,7 +35,7 @@ const createLink = async (req, res) => {
 // Update an existing link
 const updateLink = async (req, res) => {
   const { id } = req.params;
-  const { group_name, href, title } = req.body;
+  const { group_id, href, title } = req.body;
 
   const validationResponse = await validateLinksFields(req, true);
   if (validationResponse) {
@@ -56,7 +43,7 @@ const updateLink = async (req, res) => {
   }
 
   try {
-    const updated = await knex("links").where({ id }).update({ group_name, href, title });
+    const updated = await knex("links").where({ id }).update({ group_id, href, title });
     if (updated) {
       const updatedLink = await knex("links").where({ id }).first();
       res.status(200).json(updatedLink);
@@ -84,7 +71,6 @@ const deleteLink = async (req, res) => {
 };
 
 module.exports = {
-  getAllLinks,
   getLinkById,
   createLink,
   updateLink,
