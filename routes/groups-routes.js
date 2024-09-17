@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const groupsController = require("../controllers/groups-controller");
-const {authorize} = require("../ middleware/authorize")
+const {authorize} = require("../middleware/authorize")
 
 // Get all groups grouped by group_name
 router.route("/").get(groupsController.getAllGroups);

@@ -1,19 +1,20 @@
 const router = require("express").Router();
 const albumsController = require("../controllers/albums-controller");
+const { authorize } = require("../middleware/authorize");
 
 // Route to get all albums
-router.get("/", albumsController.getAllAlbums);
+router.route("/").get(albumsController.getAllAlbums);
 
 // Route to get an album by ID
-router.get("/:id", albumsController.getAlbumById);
+router.route("/:id").get(albumsController.getAlbumById);
 
 // Route to create a new album
-router.post("/", albumsController.createAlbum);
+router.route("/").post(authorize, albumsController.createAlbum);
 
 // Route to update an existing album
-router.put("/:id", albumsController.updateAlbum);
+router.route("/:id").put(authorize, albumsController.updateAlbum);
 
 // Route to delete an album
-router.delete("/:id", albumsController.deleteAlbum);
+router.route("/:id").delete(authorize, albumsController.deleteAlbum);
 
 module.exports = router;
