@@ -1,12 +1,11 @@
 const knex = require("knex")(require("../knexfile"));
 const { supabase } = require("../utils/supabase");
 
-// Create a new album
+// Handles user login by authenticating with Supabase
 const login = async (req, res) => {
   try {
-    // to get a response with the full details of created album
     const { email, password } = req.body;
-
+    // Authenticate user with Supabase
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
@@ -22,11 +21,11 @@ const login = async (req, res) => {
   }
 };
 
+// Handles user logout by invalidating session with Supabase
 const logout = async (_, res) => {
   try {
-    await supabase.auth.signOut();
-    
-    res.status(204).json({});
+    // Sign out user from Supabase
+    await supabase.auth.signOut(); 
   } catch (error) {
     res.status(500).json({ message: `Unable to log out: ${error}` });
   }
