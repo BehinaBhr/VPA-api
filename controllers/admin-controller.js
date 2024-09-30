@@ -25,7 +25,8 @@ const login = async (req, res) => {
 const logout = async (_, res) => {
   try {
     // Sign out user from Supabase
-    await supabase.auth.signOut(); 
+    await supabase.auth.signOut();
+    res.status(204).json({});
   } catch (error) {
     res.status(500).json({ message: `Unable to log out: ${error}` });
   }
