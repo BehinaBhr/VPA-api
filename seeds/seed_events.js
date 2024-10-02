@@ -17,6 +17,7 @@ exports.seed = async function (knex) {
       host: "Babak Naderi Azad",
       additional_info: "",
       fee: 15.0,
+      register: ""
     },
     {
       image: FormatImg("https://drive.google.com/file/d/1d6NjH4hx7nJKtnpmaHP1k6a7V85jZfa4/view?usp=sharing"),
@@ -28,6 +29,7 @@ exports.seed = async function (knex) {
       host: "Dr Homayoon Arbabain",
       additional_info: "",
       fee: 5.0,
+      register: ""
     },
     {
       image: FormatImg("https://drive.google.com/file/d/1xIjxBMc3f1gvWfXMCMObSvfL8M12PfWK/view?usp=sharing"),
@@ -39,6 +41,7 @@ exports.seed = async function (knex) {
       host: "",
       additional_info: "",
       fee: 7.5,
+      register: ""
     },
     {
       image: FormatImg("https://drive.google.com/file/d/1kMvSK-nN5zhQxkqcw5t7TehQE8jW5pX8/view?usp=sharing"),
@@ -50,6 +53,7 @@ exports.seed = async function (knex) {
       host: "",
       additional_info: "Meetup point at 6pm. Walking tour starts at 6:30pm",
       fee: 0.0,
+      register: ""
     },
     {
       image: FormatImg("https://drive.google.com/file/d/12v40CVjnW1NqQJ74T6W2q6HFYgsfThIk/view?usp=sharing"),
@@ -61,6 +65,7 @@ exports.seed = async function (knex) {
       host: "",
       additional_info: "",
       fee: 10.0,
+      register: ""
     },
     {
       image: FormatImg("https://drive.google.com/file/d/1xQVY9uBabbTFdGnApFOySvie9jko7Ns5/view?usp=sharing"),
@@ -72,6 +77,19 @@ exports.seed = async function (knex) {
       host: "Mojan Nozari",
       additional_info: "",
       fee: 10.0,
+      register:""
     },
+    {
+      image: FormatImg("https://drive.google.com/file/d/1CWB1216IQy4OZWXR4f4GNQUMbWMvJsLP/view?usp=sharing"),
+      title: "Online Webinar",
+      date: "2024-09-11",
+      time: "5:30-6:30 pm",
+      location: "Online",
+      topic: "Embracing AI & Agile Innovation for a Sustainable Future",
+      host: "Natalia Bakaeva",
+      additional_info: "sponsered by Arki Digital Inc.",
+      fee: 22.63,
+      register: "https://www.eventbrite.ca/e/embracing-ai-agile-innovation-for-a-sustainable-future-tickets-940703458367?aff=ebdsoporgprofile"
+    }
   ]);
 };

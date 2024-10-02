@@ -14,6 +14,7 @@ exports.up = function (knex) {
     table.string("host");
     table.string("additional_info");
     table.decimal("fee", 8, 2);
+    table.string("register");
     table.timestamps(true, true);
   });
 };
