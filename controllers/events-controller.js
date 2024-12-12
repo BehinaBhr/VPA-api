@@ -15,6 +15,7 @@ const eventAttr = [
   "events.additional_info",
   "events.fee",
   "events.register",
+  knex.raw(`CASE WHEN events.date >= CURDATE() THEN TRUE ELSE FALSE END AS isUpcoming`)
 ];
 
 // Get all events sorted by date in decending order
